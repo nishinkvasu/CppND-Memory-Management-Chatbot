@@ -82,6 +82,7 @@ ChatBot::ChatBot(ChatBot &&source){
   _chatLogic = source._chatLogic; 
   _rootNode = source._rootNode; 
   _currentNode = source._currentNode;  
+  _image = new wxBitmap();
   *_image = *source._image;
   
   source._image = NULL;
@@ -90,7 +91,29 @@ ChatBot::ChatBot(ChatBot &&source){
   source._currentNode = nullptr;
 }
 
+// move assignment
+ChatBot& ChatBot::operator = (ChatBot &&source){
+    std::cout<<" ChatBot move assignment \n";
+    if(this == &source)
+        return *this;
+     // delete the previously allocated memory if any
+    if (!_image){
+        delete _image;
+        _image = new wxBitmap();
+        *_image = *source._image;
+    }
 
+    _chatLogic = source._chatLogic;
+    _rootNode = source._rootNode;
+    _currentNode = source._currentNode;
+
+    source._image = NULL;
+    source._chatLogic = nullptr;
+    source._rootNode = nullptr;
+    source._currentNode = nullptr;
+
+    return *this;
+}
 ////
 //// EOF STUDENT CODE
 
