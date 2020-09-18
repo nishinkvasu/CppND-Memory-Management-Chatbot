@@ -16,7 +16,7 @@ private:
     ////
 
     // data handles (owned)
-    std::vector<std::unique_ptr<GraphNode>> _childEdges;  // edges to subsequent nodes // make unique
+    std::vector<std::unique_ptr<GraphEdge>> _childEdges;  // edges to subsequent nodes // make unique
 
     // data handles (not owned)
     std::vector<GraphEdge *> _parentEdges; // edges to preceding nodes 
