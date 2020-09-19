@@ -61,8 +61,7 @@ ChatBot::ChatBot(const ChatBot &source){
 ChatBot& ChatBot::operator=(const ChatBot &source){
   std::cout << " ChatBot Copy Assignment \n";
   if(this == &source){
-    return *this; // this check is to avoid self-assignment and standard boilerplate code for user 
-    // defined assignement operator
+    return *this; // this check is to avoid self-assignment 
   }
   _chatLogic = source._chatLogic; 
   _rootNode = source._rootNode; 
@@ -84,6 +83,8 @@ ChatBot::ChatBot(ChatBot &&source){
   _currentNode = source._currentNode;  
   _image = new wxBitmap();
   *_image = *source._image;
+
+  _chatLogic->SetChatbotHandle(this);
   
   source._image = NULL;
   source._chatLogic = nullptr;
@@ -106,6 +107,11 @@ ChatBot& ChatBot::operator=(ChatBot &&source){
     _chatLogic = source._chatLogic;
     _rootNode = source._rootNode;
     _currentNode = source._currentNode;
+
+    //https://knowledge.udacity.com/questions/126523
+    // led to segmentation fault if below line is not present since chatbot was 0
+    // here - wxBitmap *ChatLogic::GetImageFromChatbot()
+    _chatLogic->SetChatbotHandle(this);
 
     source._image = NULL;
     source._chatLogic = nullptr;
